@@ -1,0 +1,57 @@
+This tool is a basic file encryption and decryption program based on the RSA encryption algorithm. It allows users to securely encrypt files using a recipient's public key and decrypt those files using their private key.
+
+how the tool works:
+
+    Generating RSA Key Pair:
+    When the user selects the option to generate an RSA key pair, the program creates a new RSA key pair with a key length of 2048 bits. The key pair consists of a private key and a corresponding public key. The private key is kept secret and should only be known to the owner, while the public key can be shared with others.
+
+    Encrypting a File:
+    To encrypt a file, the user provides the path to the file they want to encrypt and the path to the recipient's public key file. The program then loads the file's contents and the recipient's public key. It uses the RSA public key to perform the encryption using the PKCS1_OAEP padding scheme. The encrypted data is saved to a specified output file.
+
+    Decrypting a File:
+    To decrypt an encrypted file, the user provides the path to the encrypted file and the path to their private key file. The program reads the encrypted data and the user's private key. It then uses the RSA private key and the same padding scheme (PKCS1_OAEP) to decrypt the data. The decrypted data is saved to a specified output file.
+
+    Terminating the Program:
+    The user can choose to quit the program at any time by selecting the appropriate option.
+
+The primary purpose of this tool is to provide a simple implementation of file encryption using RSA encryption. RSA is an asymmetric encryption algorithm, meaning it uses a pair of keys, one for encryption (public key) and one for decryption (private key). This allows secure communication between two parties without the need for them to share a secret key beforehand.
+
+Some potential use cases for this tool include:
+
+    Secure File Transfer: Users can encrypt sensitive files before sending them over untrusted channels, ensuring only the intended recipient can decrypt and access the content.
+    Data Privacy: Individuals or organizations can protect confidential data, such as financial records, personal information, or trade secrets, by encrypting the files and securely managing the private keys.
+    Digital Signatures: RSA can also be used for digital signatures, which allow the recipient to verify the authenticity and integrity of a file or message sent by the sender.
+
+It's essential to understand that this tool is a basic example and may not be suitable for all production use cases. In real-world scenarios, other considerations, such as key management, secure key exchange, and secure storage of keys, must be taken into account to ensure a robust and secure file encryption system.
+
+brief explanation of each function in the Python script:
+
+    generate_rsa_key_pair(): This function generates an RSA key pair with a key length of 2048 bits. It uses the RSA.generate() method from the Crypto.PublicKey.RSA module to create the key pair. The function returns both the private key and the corresponding public key in PEM (Privacy Enhanced Mail) format.
+
+    save_key_to_file(key, filename): This function takes a key (either private or public) and a filename as input. It saves the key data to a file with the specified filename in binary format (mode 'wb').
+
+    load_key_from_file(filename): This function takes a filename as input and loads the key data from the specified file in binary format (mode 'rb'). It returns the binary data representing the key.
+
+    encrypt_file(file_path, public_key_path, output_path): This function performs file encryption. It takes the following inputs:
+        file_path: The path to the file that needs to be encrypted.
+        public_key_path: The path to the recipient's public key file.
+        output_path: The path where the encrypted output will be saved.
+
+    The function reads the file's content, loads the recipient's public key from the file, and then uses RSA encryption with the PKCS1_OAEP padding scheme (Crypto.Cipher.PKCS1_OAEP) to encrypt the file data. The encrypted data is then saved to the specified output file.
+
+    decrypt_file(encrypted_file_path, private_key_path, output_path): This function performs file decryption. It takes the following inputs:
+        encrypted_file_path: The path to the encrypted file.
+        private_key_path: The path to the user's private key file.
+        output_path: The path where the decrypted output will be saved.
+
+    The function reads the encrypted data from the file, loads the user's private key from the file, and then uses RSA decryption with the PKCS1_OAEP padding scheme (Crypto.Cipher.PKCS1_OAEP) to decrypt the data. The decrypted data is then saved to the specified output file.
+
+    main(): This is the main function that serves as the entry point of the program. It presents a simple command-line menu to the user and allows them to choose various actions:
+        Option 1: Generate an RSA key pair and save the private and public keys to separate files.
+        Option 2: Encrypt a file using a recipient's public key.
+        Option 3: Decrypt an encrypted file using the user's private key.
+        Option 4: Quit the program.
+
+    Depending on the user's choice, the corresponding function is called to perform the desired action. The main function runs in a loop until the user chooses to quit (Option 4).
+
+    __name__ == "__main__" check: This check ensures that the main() function is only executed if the script is run directly and not when imported as a module into another Python script. This is a common Python idiom to separate executable code from reusable code in modules. When the script is run directly, the main() function is called, starting the RSA file encryption/decryption program.

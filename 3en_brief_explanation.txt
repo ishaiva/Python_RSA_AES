@@ -1,0 +1,44 @@
+This Python program is an encryption/decryption tool that uses the cryptography library for handling cryptographic operations. It allows the user to encrypt and decrypt files using the AES (Advanced Encryption Standard) algorithm in CFB (Cipher Feedback) mode. Before performing encryption or decryption, the user must provide a key that meets certain requirements.
+
+brief overview of how the program works:
+
+    The program starts with a welcome message and a menu that offers three options: encrypt a file, decrypt a file, or quit the program.
+
+    When the user selects the "Encrypt a file" option, they are prompted to enter the path of the file they want to encrypt. The user is also asked to provide a key that must be at least 10 characters long and contain both letters and numbers. The provided key is then hashed and salted using PBKDF2HMAC to derive a 256-bit (32-byte) key.
+
+    The program generates a random 16-byte salt and a random 16-byte initialization vector (IV). It then uses the salted key and IV to create an AES cipher in CFB mode.
+
+    The file is read, encrypted using the AES cipher, and written to a new file with the extension .encrypted. The encrypted file contains the salt, IV, and the encrypted data.
+
+    When the user selects the "Decrypt a file" option, they are prompted to enter the path of the file they want to decrypt. They are also asked to provide the same key used during encryption.
+
+    The program reads the encrypted file, extracts the salt and IV from the beginning of the file, and uses them to recreate the salted key.
+
+    It then uses the salted key and IV to create the AES cipher in CFB mode for decryption.
+
+    The encrypted data is read, decrypted using the AES cipher, and written to a new file with the original file extension.
+
+    If the user selects the "Quit" option or enters 'q' at any time, the program terminates.
+
+It's worth mentioning that the implementation of the encryption/decryption logic in this program is relatively secure due to the use of the PBKDF2HMAC key derivation function and AES encryption with a random IV. However, there are always other aspects to consider when implementing cryptographic systems in real-world scenarios, such as key management, authentication, and data integrity. For critical applications, it's often recommended to use well-established cryptographic libraries and consult with security experts to ensure a robust and secure implementation.
+
+Remember that cryptography is a complex field, and small mistakes can lead to vulnerabilities. Always use trusted libraries and algorithms, and keep your code up-to-date with security best practices.
+
+
+let's go through a brief explanation of each function in the Python script:
+
+    hash_key(key, salt): This function takes a key (password) and a salt as input and uses the PBKDF2HMAC key derivation function with SHA256 as the underlying hash function to derive a 256-bit (32-byte) key from the combination of the key and salt. The purpose of using PBKDF2HMAC is to make brute-force attacks more difficult by increasing the computational cost of deriving the key. The derived key is returned as the output.
+
+    get_key(): This function prompts the user to enter a key (password) through the command line. It checks if the key meets the required criteria: at least 10 characters long and contains both letters and numbers. If the user enters 'q' at any time, the program is terminated. Once a valid key is provided, it is returned as the output.
+
+    encrypt_file(file_path, key): This function takes a file path and a key as input. It reads the content of the file specified by the file path, generates a random 16-byte salt and a random 16-byte initialization vector (IV). Then, it calls the hash_key function to derive a salted key from the provided key and salt. Using the salted key and IV, it creates an AES cipher in CFB mode, encrypts the file data, and writes the salt, IV, and encrypted data to a new file with the extension .encrypted.
+
+    decrypt_file(file_path, key): This function takes a file path and a key as input. It reads the content of the encrypted file specified by the file path, extracts the salt and IV from the beginning of the file, and calls the hash_key function to derive the same salted key used during encryption. Using the salted key and IV, it creates an AES cipher in CFB mode, decrypts the encrypted data, and writes the decrypted data to a new file with the original file extension.
+
+    exit_program(): This function prints a message indicating that the program is terminated and then exits the program.
+
+    main(): This is the main function that orchestrates the entire program's flow. It starts by printing a welcome message and a menu with three options: encrypt a file, decrypt a file, or quit the program. Depending on the user's choice, it calls the corresponding functions (encrypt_file, decrypt_file, or exit_program) to perform the desired action.
+
+    if __name__ == "__main__": This line of code ensures that the main() function is only called if the script is run directly, not if it is imported as a module in another script. This allows the script to be both a standalone program and a reusable module. When executed as a standalone program, the main() function is called to start the encryption/decryption tool.
+
+

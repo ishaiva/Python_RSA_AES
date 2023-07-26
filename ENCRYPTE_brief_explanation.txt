@@ -1,0 +1,38 @@
+This tool is a simple file encryption and decryption utility developed in Python. Its primary purpose is to provide a straightforward way for users to encrypt their files using a password and then decrypt them back to their original form when needed. The tool uses the Fernet symmetric encryption scheme from the cryptography library to perform the encryption and decryption operations.
+
+how the tool works:
+
+    Encryption:
+        The user is prompted to provide a key (password) that will be used to encrypt the file. The key must be at least 10 characters long and must contain both letters and numbers for security reasons.
+        The tool reads the content of the specified file in binary mode.
+        The user-provided key is passed to the hash_key() function, which uses PBKDF2-HMAC-SHA256 to derive a strong encryption key from the password. This ensures the key is securely generated, even if the user-provided key is weak.
+        The tool then uses the Fernet encryption algorithm with the derived key to encrypt the file's data.
+        The encrypted data is written to a new file with the original file name and a ".encrypted" extension appended to it.
+
+    Decryption:
+        The user is prompted to provide the same key used during encryption to decrypt the file.
+        The tool reads the content of the encrypted file in binary mode.
+        The user-provided key is passed to the hash_key() function again to derive the same encryption key that was used during encryption.
+        The tool then uses the Fernet decryption algorithm with the derived key to decrypt the file's encrypted data back to its original form.
+        The decrypted data is written to a new file with the ".encrypted" extension removed from the original file name.
+
+brief explanation of each function in the Python script:
+
+    hash_key(key): This function takes a user-provided key and uses the PBKDF2-HMAC-SHA256 algorithm to derive a secure encryption key. PBKDF2 (Password-Based Key Derivation Function 2) is used to stretch and strengthen the key. The function applies 100,000 iterations of the hash function to make it computationally expensive for attackers to perform brute-force attacks on the key. The salt ensures that each key's hash is unique and adds another layer of security. The final hash is base64 encoded to ensure it can be represented as a valid ASCII string.
+
+    get_key(): This function prompts the user to enter a key, ensuring it meets certain security criteria. The requirement of having at least 10 characters and containing both letters and numbers helps create stronger and more secure keys. Users are more likely to use stronger passwords when they understand the requirements. However, it's essential to educate users about the significance of using strong and unique keys to enhance security further.
+
+    encrypt_file(file_path, key): This function reads the content of a file in binary mode and encrypts it using the Fernet symmetric encryption scheme. Fernet is a secure choice as it provides authenticated encryption, ensuring the integrity of the data along with confidentiality. The encryption process converts the original file data into an unreadable form that can only be decrypted with the correct key. The encrypted data is then written to a new file with a ".encrypted" extension added to the original file name. While this implementation works for smaller files, for larger files, it may be more efficient to process the data in smaller chunks to reduce memory usage.
+
+    decrypt_file(file_path, key): This function reads the encrypted file in binary mode and decrypts it using the Fernet decryption scheme. It reverts the encrypted data back to its original form with the correct key. The decrypted data is written to a new file, and the ".encrypted" extension is removed from the original file name.
+
+    main(): This function serves as the main entry point for the script. It provides a simple command-line interface for the user to choose between encryption, decryption, or quitting the program. Depending on the user's choice, it prompts for the necessary information (file path and key) and calls the appropriate encryption or decryption functions.
+
+Additional Considerations:
+
+    Error Handling: While the script does handle some basic error cases (e.g., invalid file paths), it's always a good practice to include comprehensive error handling to address various scenarios gracefully.
+    Documentation: Consider adding comments and docstrings to each function, explaining their purpose, input parameters, and return values. This will make it easier for other developers (and your future self) to understand and work with the code.
+    Security Recommendations: Although the script provides basic encryption functionality, there are other security measures to consider, such as file integrity verification and secure key management.
+    Unit Testing: Including unit tests can help ensure the functions work correctly and can be easily integrated into larger projects with confidence.
+
+By addressing these considerations and providing clear documentation, your script will be well-prepared for uploading to GitHub. When sharing code on GitHub, remember to include a license file and a clear README.md that explains how to use the tool and any other relevant information for potential users.

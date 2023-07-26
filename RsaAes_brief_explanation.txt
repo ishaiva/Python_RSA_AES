@@ -1,0 +1,48 @@
+brief explanation of each function in the RsaAes.py Python script:
+
+This is a Python code that provides functionality for encrypting and decrypting files using both AES and RSA encryption algorithms. The script uses the cryptography and pycryptodome libraries to implement the encryption and decryption processes.
+
+    hash_key(key, salt): This function takes a key and a salt as input and derives a 256-bit key using PBKDF2-HMAC-SHA256 key derivation function. PBKDF2 is used to strengthen the key and make it more resistant to attacks like brute force. The resulting key is returned.
+
+    generate_aes_key(): This function prompts the user to enter a key that must be at least 10 characters long and contain both letters and numbers. It ensures that the user provides a strong key and returns the generated AES key.
+
+    generate_rsa_key_pair(): This function generates an RSA key pair of 2048 bits using the Crypto.PublicKey.RSA module. It exports the private and public keys in PEM format and returns them as byte strings.
+
+    save_key_to_file(key, filename): This function takes a key (either private or public) and a filename as input. It saves the key to the specified file in binary mode.
+
+    load_key_from_file(filename): This function takes a filename as input and reads the content from the file in binary mode. It returns the key read from the file.
+
+    encrypt_file_aes(file_path, key): This function encrypts a file using AES encryption. It takes the file_path of the file to be encrypted and the key to be used for encryption. The file is read, and a salted key is derived using hash_key(). AES encryption is then applied in Cipher Feedback (CFB) mode, and the encrypted data is saved to a new file with a .encrypted_aes extension.
+
+    decrypt_file_aes(file_path, key): This function decrypts a file that was encrypted with AES. It takes the file_path of the encrypted file and the key used for encryption. The file is read, and the salt and IV (Initialization Vector) are extracted from the encrypted data. The salted key is derived using hash_key(), and AES decryption is performed in CFB mode to obtain the original file data. The decrypted data is saved to a file with the original extension.
+
+    encrypt_rsa_file(file_path, public_key_path, output_path): This function encrypts a file using RSA encryption with a recipient's public key. It takes the file_path of the file to be encrypted, the public_key_path where the recipient's public key is located, and the output_path where the encrypted output will be saved. The file is read, and RSA encryption with OAEP padding is applied using the recipient's public key. The encrypted data is saved to the specified output file.
+
+    decrypt_rsa_file(file_path, private_key_path, output_path): This function decrypts a file that was encrypted with RSA. It takes the file_path of the encrypted file, the private_key_path where the user's private key is located, and the output_path where the decrypted output will be saved. The file is read, and RSA decryption with OAEP padding is performed using the user's private key. The decrypted data is saved to the specified output file.
+
+    main(): This is the main function of the script that provides a user interface for interacting with the encryption and decryption functions. It presents a menu with options for different operations (AES encryption, AES decryption, RSA key pair generation, RSA encryption, RSA decryption, and quitting the program). Users can choose their desired operation by entering the corresponding option number. The appropriate functions are then called based on the user's choice.
+    
+    brief explanation of the main functions:
+
+    generate_aes_key: This function prompts the user to enter a key that must be at least 10 characters long and include both letters and numbers. The function returns the generated AES key.
+
+    generate_rsa_key_pair: This function generates an RSA key pair of 2048 bits and returns the private key and public key in PEM format.
+
+    save_key_to_file and load_key_from_file: These functions allow you to save the RSA key pair to files and load them from files, respectively.
+
+    encrypt_file_aes: This function encrypts a file using AES encryption with a given key. The encrypted file is saved with a .encrypted_aes extension.
+
+    decrypt_file_aes: This function decrypts a file that was encrypted with AES using the same key.
+
+    encrypt_rsa_file: This function encrypts a file using RSA encryption with a recipient's public key.
+
+    decrypt_rsa_file: This function decrypts a file that was encrypted with RSA using the user's private key.
+
+    main: This is the main function that provides a user interface to choose the desired encryption/decryption operation.
+
+The script provides a command-line interface that allows users to interactively choose the operations they want to perform. It prompts the user to enter appropriate information, such as file paths and keys, to complete the encryption and decryption tasks.
+
+Keep in mind that encryption is a sensitive operation, and the script must be used with caution, especially when dealing with sensitive data. Additionally, encryption is only as secure as the strength of the keys and algorithms used, so make sure to follow best practices for key management and algorithm selection.
+
+If you plan to use this script, ensure you have the required libraries installed by running pip install pycryptodome cryptography.
+    
