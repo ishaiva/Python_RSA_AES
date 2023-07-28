@@ -34,3 +34,78 @@ RSA encryption is based on the mathematical properties of large prime numbers. I
 
 To encrypt a message `m`, it is raised to the power of `e` modulo `n`:
 
+c = m^e % n
+
+To decrypt the ciphertext `c`, it is raised to the power of `d` modulo `n`:
+
+m = c^d % n
+
+
+## How AES Encryption Works
+
+AES encryption is a symmetric block cipher, meaning it encrypts data in fixed-size blocks. It involves the following steps:
+
+1. Key Expansion: The original AES key is expanded into multiple round keys using a key schedule algorithm.
+2. Initial Round: AddRoundKey operation - XOR the input block with the first round key.
+3. Main Rounds: A series of transformations (SubBytes, ShiftRows, MixColumns, AddRoundKey) are applied in multiple rounds (10, 12, or 14 rounds based on key size).
+4. Final Round: The same transformations are applied, except MixColumns, and the last round key is XORed with the output.
+5. The encrypted data is the output of the final round.
+
+## Script Overview
+
+The Python script `file_encrypt_decrypt.py` provides functions to perform both RSA and AES encryption and decryption. Here's an overview of the script:
+
+- `hash_key(key, salt)`: This function hashes the input `key` using PBKDF2HMAC to derive a consistent key for AES encryption.
+
+- `generate_aes_key()`: This function prompts the user to enter a passphrase for AES encryption and ensures its validity.
+
+- `generate_rsa_key_pair()`: This function generates an RSA key pair with a key size of 2048 bits.
+
+- `save_key_to_file(key, filename)`: This function saves a key to a file.
+
+- `load_key_from_file(filename)`: This function loads a key from a file.
+
+- `encrypt_file_aes(file_path, key)`: This function encrypts a file using AES encryption.
+
+- `decrypt_file_aes(file_path, key)`: This function decrypts an AES-encrypted file.
+
+- `encrypt_rsa_file(file_path, public_key_path, output_path)`: This function encrypts a file using RSA encryption.
+
+- `decrypt_rsa_file(file_path, private_key_path, output_path)`: This function decrypts an RSA-encrypted file.
+
+## Usage
+
+1. Clone the repository to your local machine.
+
+2. Install the required dependencies by running:
+
+pip install cryptography pycryptodome
+
+
+3. Run the script:
+
+python file_encrypt_decrypt.py
+
+
+4. Choose the desired encryption/decryption option from the command-line menu.
+
+## Dependencies
+
+The script requires the following Python libraries:
+
+- `cryptography`: For RSA encryption and decryption.
+- `pycryptodome`: For AES encryption and decryption.
+
+You can install these libraries using `pip`:
+
+pip install cryptography pycryptodome
+
+
+## Contributing
+
+Contributions to this project are welcome! If you find any issues or have suggestions for improvements, please feel free to create an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
